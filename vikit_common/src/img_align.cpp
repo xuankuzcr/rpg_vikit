@@ -234,7 +234,7 @@ finishIteration()
 
   if(display_)
   {
-    cv::namedWindow("residuals", CV_WINDOW_AUTOSIZE);
+    cv::namedWindow("residuals", cv::WINDOW_AUTOSIZE);
     cv::imshow("residuals", resimg_*3);
     cv::waitKey(0);
   }
@@ -434,7 +434,7 @@ finishIteration()
 
   if(display_)
   {
-    cv::namedWindow("residuals", CV_WINDOW_AUTOSIZE);
+    cv::namedWindow("residuals", cv::WINDOW_AUTOSIZE);
     cv::imshow("residuals", resimg_*3);
     cv::waitKey(0);
   }
