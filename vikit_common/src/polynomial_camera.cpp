@@ -78,7 +78,30 @@ cam2world (const Vector2d& uv) const
 Vector2d PolynomialCamera::
 world2cam(const Vector3d& xyz) const
 {
-  return world2cam(project2d(xyz));
+  // return world2cam(project2d(xyz));
+  Vector2d px;
+  if(!distortion_)
+  {
+    px[0] = fx_*xyz[0] + cx_;
+    px[1] = fy_*xyz[1] + cy_;
+  }
+  else
+  {
+    double xd, yd;
+    const double r = sqrt( xyz( 1 ) * xyz( 1 ) + xyz( 0 ) * xyz( 0 ));
+    // if (r < 1e-8)
+    // {
+    //   return uv;
+    // }
+    const double theta = acos( xyz( 2 ) / xyz.norm( ) );
+    const double thetad = thetad_from_theta(theta);
+    const double scaling = thetad / r;
+    xd = xyz[0] * scaling;
+    yd = xyz[1] * scaling;
+    px[0] = xd*fx_ + yd*skew_ + cx_;
+    px[1] = yd*fy_ + cy_;
+  }
+  return px;
 }
 
 Vector2d PolynomialCamera::
@@ -103,7 +126,7 @@ world2cam(const Vector2d& uv) const
     const double scaling = thetad / r;
     xd = uv[0] * scaling;
     yd = uv[1] * scaling;
-    px[0] = xd*fx_ + cx_;
+    px[0] = xd*fx_ + yd*skew_ + cx_;
     px[1] = yd*fy_ + cy_;
   }
   return px;
