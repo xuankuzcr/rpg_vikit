@@ -64,7 +64,7 @@ bool loadFromRosNs(const std::string& ns, vk::AbstractCamera*& cam)
     cam = new vk::PolynomialCamera(
         getParam<int>(ns+"/cam_width"),
         getParam<int>(ns+"/cam_height"),
-        getParam<double>(ns+"/scale", 1.0),
+        // getParam<double>(ns+"/scale", 1.0),
         getParam<double>(ns+"/cam_fx"),
         getParam<double>(ns+"/cam_fy"),
         getParam<double>(ns+"/cam_cx"),
@@ -110,7 +110,7 @@ bool loadFromRosNs(const std::string& ns, std::vector<vk::AbstractCamera*>& cam_
       cam_list.push_back(new vk::PolynomialCamera(
         getParam<int>(cam_ns+"/image_width"),
         getParam<int>(cam_ns+"/image_height"),
-        getParam<double>(cam_ns+"/scale", 1.0),
+        // getParam<double>(cam_ns+"/scale", 1.0),
         getParam<double>(cam_ns+"/A11"),  // cam_fx
         getParam<double>(cam_ns+"/A22"),  // cam_fy
         getParam<double>(cam_ns+"/u0"),  // cam_cx

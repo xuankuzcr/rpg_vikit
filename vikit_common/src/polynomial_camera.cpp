@@ -16,16 +16,29 @@
 
 namespace vk {
 
+// PolynomialCamera::
+// PolynomialCamera(double width, double height, double scale, 
+//               double fx, double fy,
+//               double cx, double cy, double skew,
+//               double k2, double k3, double k4, double k5, double k6, double k7) :
+//               AbstractCamera(width * scale , height * scale, scale),
+//               fx_(fx * scale), fy_(fy * scale), cx_(cx * scale), cy_(cy * scale), skew_(skew * scale),
+//               distortion_(fabs(k2) > 0.0000001)
+// {
+//   cout << "scale: " << scale << endl;
+//   k2_ = k2; k3_ = k3; k4_ = k4; k5_ = k5; k6_ = k6; k7_ = k7; 
+// }
+
 PolynomialCamera::
-PolynomialCamera(double width, double height, double scale, 
+PolynomialCamera(double width, double height, // double scale, 
               double fx, double fy,
               double cx, double cy, double skew,
               double k2, double k3, double k4, double k5, double k6, double k7) :
-              AbstractCamera(width * scale , height * scale, scale),
-              fx_(fx * scale), fy_(fy * scale), cx_(cx * scale), cy_(cy * scale), skew_(skew * scale),
+              AbstractCamera(width, height, 1.0),
+              fx_(fx), fy_(fy), cx_(cx), cy_(cy), skew_(skew),
               distortion_(fabs(k2) > 0.0000001)
 {
-  cout << "scale: " << scale << endl;
+  // cout << "scale: " << scale << endl;
   k2_ = k2; k3_ = k3; k4_ = k4; k5_ = k5; k6_ = k6; k7_ = k7; 
 }
 

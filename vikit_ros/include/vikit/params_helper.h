@@ -39,14 +39,15 @@ template<typename T>
 T getParam(const std::string& name)
 {
   T v;
-  if(ros::param::get(name, v))
+  int i = 0;
+  while(ros::param::get(name, v) == false)
   {
-    ROS_INFO_STREAM("Found parameter: " << name << ", value: " << v);
-    return v;
+    ROS_ERROR_STREAM("Cannot find value for parameter: " << name << ", will try again.");
+    if ((i ++) >= 5) return T();
   }
-  else
-    ROS_ERROR_STREAM("Cannot find value for parameter: " << name);
-  return T();
+  
+  ROS_INFO_STREAM("Found parameter: " << name << ", value: " << v);
+  return v;
 }
 
 } // namespace vk

@@ -31,7 +31,11 @@ private:
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  PolynomialCamera(double width, double height, double scale,
+  // PolynomialCamera(double width, double height, double scale,
+  //               double fx, double fy, double cx, double cy, double skew,
+  //               double k2=0.0, double k3=0.0, double k4=0.0, double k5=0.0, double k6=0.0, double k7=0.0);
+
+  PolynomialCamera(double width, double height, // double scale,
                 double fx, double fy, double cx, double cy, double skew,
                 double k2=0.0, double k3=0.0, double k4=0.0, double k5=0.0, double k6=0.0, double k7=0.0);
 
