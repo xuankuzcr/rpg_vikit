@@ -25,14 +25,18 @@ template<typename T>
 T getParam(const std::string& name, const T& defaultValue)
 {
   T v;
-  if(ros::param::get(name, v))
+  int i = 0;
+  while(ros::param::get(name, v) == false)
   {
-    ROS_INFO_STREAM("Found parameter: " << name << ", value: " << v);
-    return v;
+    ROS_INFO_STREAM("Cannot find value for parameter: " << name << ", will try again." << v);
+    if ((i ++) >= 5)
+    {
+      ROS_WARN_STREAM("Cannot find value for parameter: " << name << ", assigning default: " << defaultValue);
+      return defaultValue;
+    }
   }
-  else
-    ROS_WARN_STREAM("Cannot find value for parameter: " << name << ", assigning default: " << defaultValue);
-  return defaultValue;
+  ROS_INFO_STREAM("Found parameter: " << name << ", value: " << v);
+  return v;
 }
 
 template<typename T>
