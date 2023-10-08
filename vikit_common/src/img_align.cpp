@@ -21,6 +21,9 @@
 #include <vikit/performance_monitor.h>
 #include <vikit/img_align.h>
 #include <sophus/se3.h>
+#ifdef JetsonARM64
+#include <opencv2/highgui/highgui_c.h>
+#endif
 
 namespace vk {
 
@@ -234,7 +237,11 @@ finishIteration()
 
   if(display_)
   {
+    #ifdef JetsonARM64  
+    cv::namedWindow("residuals", CV_WINDOW_AUTOSIZE);
+    #else
     cv::namedWindow("residuals", cv::WINDOW_AUTOSIZE);
+    #endif
     cv::imshow("residuals", resimg_*3);
     cv::waitKey(0);
   }
@@ -434,7 +441,11 @@ finishIteration()
 
   if(display_)
   {
+    #ifdef JetsonARM64  
+    cv::namedWindow("residuals", CV_WINDOW_AUTOSIZE);
+    #else 
     cv::namedWindow("residuals", cv::WINDOW_AUTOSIZE);
+    #endif
     cv::imshow("residuals", resimg_*3);
     cv::waitKey(0);
   }
