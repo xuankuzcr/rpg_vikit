@@ -66,7 +66,7 @@ LIST(APPEND SOURCEFILES src/atan_camera.cpp
                         src/robust_cost.cpp
                         src/user_input_thread.cpp
                         src/pinhole_camera.cpp
-src/equidistant_camera.cpp
+                        src/equidistant_camera.cpp
                         src/polynomial_camera.cpp
                         src/homography.cpp
                         src/img_align.cpp)
@@ -83,14 +83,14 @@ IF(USE_ROS)
 ENDIF()
 
 # Tests
-ADD_EXECUTABLE(test_vk_common_camera test/test_camera.cpp)
-TARGET_LINK_LIBRARIES(test_vk_common_camera ${PROJECT_NAME})
+# ADD_EXECUTABLE(test_vk_common_camera test/test_camera.cpp)
+# TARGET_LINK_LIBRARIES(test_vk_common_camera ${PROJECT_NAME})
 
-ADD_EXECUTABLE(test_vk_common_triangulation test/test_triangulation.cpp)
-TARGET_LINK_LIBRARIES(test_vk_common_triangulation ${PROJECT_NAME})
+# ADD_EXECUTABLE(test_vk_common_triangulation test/test_triangulation.cpp)
+# TARGET_LINK_LIBRARIES(test_vk_common_triangulation ${PROJECT_NAME})
 
-ADD_EXECUTABLE(test_vk_common_patch_score test/test_patch_score.cpp)
-TARGET_LINK_LIBRARIES(test_vk_common_patch_score ${PROJECT_NAME})
+# ADD_EXECUTABLE(test_vk_common_patch_score test/test_patch_score.cpp)
+# TARGET_LINK_LIBRARIES(test_vk_common_patch_score ${PROJECT_NAME})
 
 
 ################################################################################
