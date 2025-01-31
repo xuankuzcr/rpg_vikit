@@ -4,6 +4,9 @@ VIKIT
 Vikit (Vision-Kit) provides some tools for your vision/robotics project.
 Far from stable.
 
+Update on: Feb 01, 2025
+Author: StrangeFly(uavfly)
+
 A test for ros2 humble on Ubuntu22.04,and use Sophus 1.22.10.
 
 vikit_common install not use ros,only make & sudo make install.
