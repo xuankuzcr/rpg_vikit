@@ -3,6 +3,8 @@
  *
  *  Created on: Jan 20, 2013
  *      Author: chrigi
+ *  Update on: Feb 01, 2025
+ *      Author: StrangeFly
  */
 
 #include <vikit/output_helper.h>
