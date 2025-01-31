@@ -11,6 +11,7 @@
 #define LM_SOLVER_IMPL_HPP_
 
 #include <stdexcept>
+#include <vikit/math_utils.h>
 
 template <int D, typename T>
 void vk::NLLSSolver<D, T>::optimize(ModelType& model)
@@ -288,7 +289,7 @@ void vk::NLLSSolver<D, T>::setRobustCostFunction(
 template <int D, typename T>
 void vk::NLLSSolver<D, T>::setPrior(
     const T&  prior,
-    const Matrix<double, D, D>&  Information)
+    const Eigen::Matrix<double, D, D>&  Information)
 {
   have_prior_ = true;
   prior_ = prior;
@@ -315,7 +316,7 @@ inline const double& vk::NLLSSolver<D, T>::getChi2() const
 }
 
 template <int D, typename T>
-inline const vk::Matrix<double, D, D>& vk::NLLSSolver<D, T>::getInformationMatrix() const
+inline const Eigen::Matrix<double, D, D>& vk::NLLSSolver<D, T>::getInformationMatrix() const
 {
   return H_;
 }
