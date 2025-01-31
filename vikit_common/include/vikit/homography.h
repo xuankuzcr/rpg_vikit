@@ -20,7 +20,7 @@
 #include <Eigen/StdVector>
 #include <Eigen/SVD>
 #include <vikit/math_utils.h>
-
+#include <sophus/se3.hpp>
 namespace vk {
 
 using namespace Eigen;
@@ -34,7 +34,7 @@ struct HomographyDecomposition
   Vector3d n;
 
   // Resolved  Composition
-  Sophus::SE3 T; //!< second from first
+  Sophus::SE3<double> T; //!< second from first
   int score;
 };
 
@@ -72,8 +72,8 @@ public:
   const vector<Vector2d, aligned_allocator<Vector2d> >& fts_c1; //!< Features on first image on unit plane
   const vector<Vector2d, aligned_allocator<Vector2d> >& fts_c2; //!< Features on second image on unit plane
   vector<bool> inliers;
-  SE3 T_c2_from_c1;             //!< Relative translation and rotation of two images
-  Matrix3d H_c2_from_c1;                   //!< Homography
+  Sophus::SE3<double> T_c2_from_c1;             //!< Relative translation and rotation of two images
+  Eigen::Matrix3d H_c2_from_c1;                   //!< Homography
   vector<HomographyDecomposition> decompositions;
 };
 

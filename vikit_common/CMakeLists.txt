@@ -4,7 +4,7 @@ CMAKE_MINIMUM_REQUIRED (VERSION 2.8.3)
 SET(CMAKE_BUILD_TYPE Release) # Release, RelWithDebInfo
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/CMakeModules/")
-SET(USE_ROS TRUE) # Set False if you want to build this package without Catkin
+SET(USE_ROS False) # Set False if you want to build this package without Catkin
 
 # Set build flags. Set IS_ARM on odroid board as environment variable
 SET(CMAKE_CXX_FLAGS "-Wall -D_LINUX -D_REENTRANT -march=native -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-pragmas")
@@ -31,6 +31,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3 -fsee -fomit-frame-pointer -
 FIND_PACKAGE(OpenCV REQUIRED)
 FIND_PACKAGE(Eigen REQUIRED)
 FIND_PACKAGE(Sophus REQUIRED)
+FIND_PACKAGE(fmt REQUIRED)
 
 # Include dirs
 INCLUDE_DIRECTORIES(
@@ -38,6 +39,7 @@ INCLUDE_DIRECTORIES(
   ${Eigen_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
   ${Sophus_INCLUDE_DIRS}
+  fmt
 )
 
 IF(USE_ROS)
@@ -73,7 +75,7 @@ ADD_LIBRARY(${PROJECT_NAME} SHARED ${SOURCEFILES})
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
   ${OpenCV_LIBS}
   ${Sophus_LIBRARIES}
-  ${catkin_LIBRARIES})
+  fmt::fmt)
 
 IF(USE_ROS)
   TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${catkin_LIBRARIES})
@@ -81,13 +83,13 @@ ENDIF()
 
 # Tests
 ADD_EXECUTABLE(test_vk_common_camera test/test_camera.cpp)
-TARGET_LINK_LIBRARIES(test_vk_common_camera ${PROJECT_NAME})
+TARGET_LINK_LIBRARIES(test_vk_common_camera ${PROJECT_NAME} ${OpenCV_LIBS})
 
 ADD_EXECUTABLE(test_vk_common_triangulation test/test_triangulation.cpp)
-TARGET_LINK_LIBRARIES(test_vk_common_triangulation ${PROJECT_NAME})
+TARGET_LINK_LIBRARIES(test_vk_common_triangulation ${PROJECT_NAME} ${OpenCV_LIBS})
 
 ADD_EXECUTABLE(test_vk_common_patch_score test/test_patch_score.cpp)
-TARGET_LINK_LIBRARIES(test_vk_common_patch_score ${PROJECT_NAME})
+TARGET_LINK_LIBRARIES(test_vk_common_patch_score ${PROJECT_NAME} ${OpenCV_LIBS})
 
 
 ################################################################################

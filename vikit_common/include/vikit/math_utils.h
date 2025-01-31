@@ -11,7 +11,7 @@
 
 #include <Eigen/Core>
 #include <Eigen/StdVector>
-#include <sophus/se3.h>
+#include <sophus/se3.hpp>
 
 namespace vk
 {
@@ -21,7 +21,7 @@ using namespace std;
 using namespace Sophus;
 
 Vector3d triangulateFeatureNonLin(
-    const Matrix3d& R,
+    const Eigen::Matrix3d& R,
     const Vector3d& t,
     const Vector3d& feature1,
     const Vector3d& feature2);
@@ -29,7 +29,7 @@ Vector3d triangulateFeatureNonLin(
 /// Assumes the bearing vectors f_c and f_r are on the epipolar plane, i.e.
 /// perfect triangulation without noise!
 bool depthFromTriangulationExact(
-    const Matrix3d& R_r_c,
+    const Eigen::Matrix3d& R_r_c,
     const Vector3d& t_r_c,
     const Vector3d& f_r,
     const Vector3d& f_c,
@@ -44,7 +44,7 @@ double reprojError(
 double computeInliers(
     const vector<Vector3d>& features1,
     const vector<Vector3d>& features2,
-    const Matrix3d& R,
+    const Eigen::Matrix3d& R,
     const Vector3d& t,
     const double reproj_thresh,
     double error_multiplier2,
@@ -55,7 +55,7 @@ double computeInliers(
 void computeInliersOneView(
     const vector<Vector3d> & feature_sphere_vec,
     const vector<Vector3d> & xyz_vec,
-    const Matrix3d &R,
+    const Eigen::Matrix3d &R,
     const Vector3d &t,
     const double reproj_thresh,
     const double error_multiplier2,
@@ -63,25 +63,25 @@ void computeInliersOneView(
     vector<int>& outliers);
 
 //! Direct Cosine Matrix to Roll Pitch Yaw
-Vector3d dcm2rpy(const Matrix3d &R);
+Vector3d dcm2rpy(const Eigen::Matrix3d &R);
 
 //! Roll Pitch Yaw to Direct Cosine Matrix
-Matrix3d rpy2dcm(const Vector3d &rpy);
+Eigen::Matrix3d rpy2dcm(const Vector3d &rpy);
 
 //! Angle Axis parametrization to Quaternion
 Quaterniond angax2quat(const Vector3d& n, const double& angle);
 
 //! Angle Axis parametrization to Matrix representation
-Matrix3d angax2dcm(const Vector3d& n, const double& angle);
+Eigen::Matrix3d angax2dcm(const Vector3d& n, const double& angle);
 
 double sampsonusError(
     const Vector2d &v2Dash,
-    const Matrix3d& m3Essential,
+    const Eigen::Matrix3d& m3Essential,
     const Vector2d& v2);
 
-inline Matrix3d sqew(const Vector3d& v)
+inline Eigen::Matrix3d sqew(const Vector3d& v)
 {
-  Matrix3d v_sqew;
+  Eigen::Matrix3d v_sqew;
   v_sqew << 0, -v[2], v[1],
             v[2], 0, -v[0],
             -v[1], v[0], 0;
@@ -144,7 +144,7 @@ inline Vector2d pyrFromZero_2d(const Vector2d& uv_0, int level)
 inline void
 frameJac_xyz2uv(const Vector3d & xyz,
                  const double & focal_length,
-                 Matrix<double,2,6> & frame_jac)
+                 Eigen::Matrix<double,2,6> & frame_jac)
 {
   const double x = xyz[0];
   const double y = xyz[1];

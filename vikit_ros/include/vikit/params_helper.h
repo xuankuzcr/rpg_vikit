@@ -3,6 +3,8 @@
  *
  *  Created on: Feb 22, 2013
  *      Author: cforster
+ *  Update on: Feb 01, 2025
+ *      Author: StrangeFly
  *
  * from libpointmatcher_ros
  */
@@ -11,42 +13,44 @@
 #define ROS_PARAMS_HELPER_H_
 
 #include <string>
-#include <ros/ros.h>
+#include <rclcpp/rclcpp.hpp>
 
 namespace vk {
 
 inline
-bool hasParam(const std::string& name)
+bool hasParam(const rclcpp::Node::SharedPtr &nh, const std::string& name)
 {
-  return ros::param::has(name);
+  return nh->has_parameter(name);
 }
 
 template<typename T>
-T getParam(const std::string& name, const T& defaultValue)
+T getParam(const rclcpp::Node::SharedPtr &nh, const std::string& name, const T& defaultValue)
 {
   T v;
-  if(ros::param::get(name, v))
+  if(nh->has_parameter(name))
   {
-    ROS_INFO_STREAM("Found parameter: " << name << ", value: " << v);
+    v = nh->get_parameter(name).get_value<T>();
+    RCLCPP_INFO(nh->get_logger(), "Found parameter: %s, value: %s", name.c_str(), std::to_string(v).c_str());
     return v;
   }
   else
-    ROS_WARN_STREAM("Cannot find value for parameter: " << name << ", assigning default: " << defaultValue);
+    RCLCPP_WARN(nh->get_logger(), "Cannot find value for parameter: %s, assigning default: %s", name.c_str(), std::to_string(defaultValue).c_str());
+	  nh->declare_parameter(name, defaultValue);
   return defaultValue;
 }
 
 template<typename T>
-T getParam(const std::string& name)
+T getParam(const rclcpp::Node::SharedPtr &nh, const std::string& name)
 {
   T v;
   int i = 0;
-  while(ros::param::get(name, v) == false)
+  while(!nh->get_parameter(name, v))
   {
-    ROS_ERROR_STREAM("Cannot find value for parameter: " << name << ", will try again.");
+    RCLCPP_ERROR(nh->get_logger(), "Cannot find value for parameter: %s, will try again.", name.c_str());
     if ((i ++) >= 5) return T();
   }
   
-  ROS_INFO_STREAM("Found parameter: " << name << ", value: " << v);
+  RCLCPP_INFO(nh->get_logger(), "Found parameter: %s, value: %s", name.c_str(), std::to_string(v).c_str());
   return v;
 }
 
