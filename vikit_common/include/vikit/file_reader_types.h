@@ -8,6 +8,8 @@
 #ifndef VIKIT_FILE_READER_TYPES_H_
 #define VIKIT_FILE_READER_TYPES_H_
 
+#include <Eigen/Core>
+#include <Eigen/Eigen>
 namespace vk {
 
 /// Common types
