@@ -8,8 +8,7 @@ namespace vk {
 
 /// A class that starts its own thread and listens to the console input. The
 /// console input can then be inquired using the getInput() function.
-class UserInputThread
-{
+class UserInputThread {
 public:
   UserInputThread();
   ~UserInputThread();
@@ -22,7 +21,6 @@ public:
   void stop();
 
 private:
-
   /// Main loop that waits for new user input
   void acquireUserInput();
 
@@ -42,7 +40,7 @@ private:
   int getche();
 
   bool stop_;
-  std::thread * user_input_thread_;
+  std::thread *user_input_thread_;
   char input_;
 
   struct termios original_terminal_settings_;

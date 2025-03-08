@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import os
 
@@ -13,11 +13,13 @@ class RosNode:
             if type(parameter_dictionary[key]) is dict:
                 self.add_parameters(namespace+key+'/', parameter_dictionary[key])
             else:
-                self._param_string += ' _'+namespace+key+':='+str(parameter_dictionary[key])
+                # ROS 2 uses double dash for parameters
+                self._param_string += ' --' + namespace + key + ' ' + str(parameter_dictionary[key])
         
     def run(self, parameter_dictionary, namespace=''):
         self.add_parameters(namespace, parameter_dictionary)
-        print('Starting ROS node with parameters: '+self._param_string)
+        print('Starting ROS 2 node with parameters: ' + self._param_string)
         
-        os.system('rosrun ' + self._package + ' ' + self._executable + ' ' + self._param_string)
-        print('ROS node finished processing.')
+        # Use ros2 run instead of rosrun
+        os.system('ros2 run ' + self._package + ' ' + self._executable + ' ' + self._param_string)
+        print('ROS 2 node finished processing.')

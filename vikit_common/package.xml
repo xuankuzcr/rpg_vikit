@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<package>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>vikit_common</name>
   <version>0.0.0</version>
   <description>The vikit_common package</description>
@@ -16,11 +17,15 @@
   <license>GPLv3</license>
 
 
-  <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>cmake_modules</build_depend> <!-- for FindEigen.cmake module -->
-  <run_depend>roscpp</run_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  
+  <depend>rclcpp</depend>
+  <depend>eigen</depend>
+  <depend>opencv</depend>
+  <depend>sophus</depend>
 
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
@@ -28,6 +33,6 @@
     <!-- <metapackage/> -->
 
     <!-- Other tools can request additional information be placed here -->
-
+    <build_type>ament_cmake</build_type>
   </export>
 </package>
