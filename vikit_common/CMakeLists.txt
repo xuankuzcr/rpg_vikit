@@ -13,6 +13,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -D_LINUX -D_REENTRANT -march=nativ
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(fmt REQUIRED)
 
 # Find and configure Eigen3
 find_package(Eigen3 REQUIRED)
@@ -34,6 +35,7 @@ include_directories(
   ${EIGEN3_INCLUDE_DIR}
   ${OpenCV_INCLUDE_DIRS}
   ${Sophus_INCLUDE_DIRS}
+  ${fmt_INCLUDE_DIRS}
 )
 
 # Add definitions for Eigen
@@ -61,11 +63,13 @@ add_library(${PROJECT_NAME} SHARED ${SOURCEFILES})
 # Add dependencies
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
+  fmt
 )
 
 target_link_libraries(${PROJECT_NAME}
   ${OpenCV_LIBS}
   ${Sophus_LIBRARIES}
+  fmt::fmt
 )
 
 # Add Sophus include directories to target
@@ -75,13 +79,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 # Tests
 add_executable(test_vk_common_camera test/test_camera.cpp)
-target_link_libraries(test_vk_common_camera ${PROJECT_NAME})
+target_link_libraries(test_vk_common_camera ${PROJECT_NAME} fmt::fmt)
 
 add_executable(test_vk_common_triangulation test/test_triangulation.cpp)
-target_link_libraries(test_vk_common_triangulation ${PROJECT_NAME})
+target_link_libraries(test_vk_common_triangulation ${PROJECT_NAME} fmt::fmt)
 
 add_executable(test_vk_common_patch_score test/test_patch_score.cpp)
-target_link_libraries(test_vk_common_patch_score ${PROJECT_NAME})
+target_link_libraries(test_vk_common_patch_score ${PROJECT_NAME} fmt::fmt)
 
 # Install
 install(
@@ -105,6 +109,7 @@ ament_export_dependencies(
   Eigen3
   OpenCV
   Sophus
+  fmt
 )
 
 ament_package()
